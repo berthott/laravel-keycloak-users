@@ -1,0 +1,32 @@
+{
+  "name": "berthott/laravel-keycloak-users",
+  "description": "Laravel user maintanance in keycloak",
+  "license": "MIT",
+  "authors": [
+      {
+          "name": "Jan Bladt",
+          "email": "berthott@web.de"
+      }
+  ],
+  "minimum-stability": "dev",
+  "autoload" : {
+      "psr-4" : {
+          "berthott\\KeycloakUsers\\": "src"
+      }
+  },
+  "extra" : {
+      "laravel" : {
+          "providers" : [
+              "berthott\\KeycloakUsers\\KeycloakUsersServiceProvider"
+          ]
+      }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.0",
+    "phpunit/phpunit": "^9.5"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^7.3",
+    "mnikoei/laravel-keycloak-admin": "dev-master"
+  }
+}
