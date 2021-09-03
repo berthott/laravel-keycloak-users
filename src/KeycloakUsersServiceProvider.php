@@ -7,7 +7,6 @@ use berthott\KeycloakUsers\Models\User;
 use berthott\KeycloakUsers\Observers\UserObserver;
 use berthott\KeycloakUsers\Services\KeycloakUsersService;
 use Illuminate\Support\ServiceProvider;
-use Mnikoei\Facades\KeycloakAdmin;
 
 class KeycloakUsersServiceProvider extends ServiceProvider
 {

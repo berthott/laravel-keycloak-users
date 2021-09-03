@@ -26,7 +26,14 @@
     "phpunit/phpunit": "^9.5"
   },
   "require": {
+    "berthott/laravel-crudable": "dev-master",
     "guzzlehttp/guzzle": "^7.3",
     "mnikoei/laravel-keycloak-admin": "dev-master"
-  }
+  },
+  "repositories": [
+      {
+          "type": "path",
+          "url": "../laravel-crudable"
+      }
+  ]
 }
