@@ -21,7 +21,7 @@ class KeycloakUsersService {
    * @return void
    */
   public function init() {
-    $this->loadMissingUsers();
+    $this->syncUsers();
   }
 
   /**
@@ -29,11 +29,27 @@ class KeycloakUsersService {
    *
    * @return void
    */
-  protected function loadMissingUsers()
+  protected function syncUsers()
   {
+    // delete users deleted in keycloak
+    $keycloakUsers = collect(KeycloakAdmin::user()->all());
+    foreach (User::all() as $user) {
+      if ($keycloakUsers->contains(function ($keycloakUser) use ($user) {
+        return $keycloakUser['id'] == $user->id;
+      })) {
+        continue;
+      }
+      User::withoutEvents(function () use ($user) {
+        $user->delete();
+      });
+    }
+
+    // create users created in keycloak
     $fillableFields = (new User)->fillable;
-    foreach(KeycloakAdmin::user()->all() as $keycloakUser) {
-      User::firstOrCreate(array_intersect_key($keycloakUser, array_fill_keys($fillableFields, '')));
+    foreach($keycloakUsers as $keycloakUser) {
+      User::withoutEvents(function () use ($keycloakUser, $fillableFields) {
+        User::firstOrCreate(array_intersect_key($keycloakUser, array_fill_keys($fillableFields, '')));
+      });
     }
   }
 }
