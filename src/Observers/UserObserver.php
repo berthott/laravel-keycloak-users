@@ -4,9 +4,12 @@ namespace berthott\KeycloakUsers\Observers;
 
 use Closure;
 use berthott\KeycloakUsers\Exceptions\KeycloakUsersException;
+use berthott\KeycloakUsers\Mail\NewUserMail;
 use berthott\KeycloakUsers\Models\User;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Mail;
 use Mnikoei\Facades\KeycloakAdmin;
+use Illuminate\Support\Str;
 
 class UserObserver
 {
@@ -22,7 +25,7 @@ class UserObserver
     {
       $user->username = "$user->firstName.$user->lastName";
       $this->captureExceptions(function () use ($user) {
-        $password = 'avocado123';
+        $password = Str::random(12);;
         $createdUser = KeycloakAdmin::user()->create([
           'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
             'username' => $user->username,
@@ -36,11 +39,12 @@ class UserObserver
           'id' => $createdUser['id'],
           'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
             'type' => 'password',
-            'value' => 'avocado123',
+            'value' => $password,
             'temporary' => true,
           ]
         ]);
         $user->id = $createdUser['id'];
+        Mail::to($user)->send(new NewUserMail($user, $password));
       });
     }
 
