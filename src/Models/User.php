@@ -5,6 +5,7 @@ namespace berthott\KeycloakUsers\Models;
 
 use berthott\Crudable\Models\Traits\Crudable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 
 class User extends Model
 {
@@ -31,13 +32,17 @@ class User extends Model
     ];
 
     /**
+     * @param  mixed  $id
      * @return array
      */
-    public static function rules(): array {
+    public static function rules($id): array {
         return [
             'firstName' => 'required|max:255',
             'lastName' => 'required|max:255',
-            'email' => 'required|email',
+            'email' => [
+                'required', 'email',
+                ($id ? Rule::unique('users')->ignore($id) : 'unique:users')
+            ],
         ];
     }
 }
