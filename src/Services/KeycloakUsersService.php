@@ -44,11 +44,14 @@ class KeycloakUsersService {
       });
     }
 
-    // create users created in keycloak
+    // create or update users created or updated in keycloak
     $fillableFields = (new User)->fillable;
     foreach($keycloakUsers as $keycloakUser) {
       User::withoutEvents(function () use ($keycloakUser, $fillableFields) {
-        User::firstOrCreate(array_intersect_key($keycloakUser, array_fill_keys($fillableFields, '')));
+        User::updateOrCreate(
+          ['id' => $keycloakUser['id']], 
+          array_intersect_key($keycloakUser, array_fill_keys($fillableFields, ''))
+        );
       });
     }
   }
