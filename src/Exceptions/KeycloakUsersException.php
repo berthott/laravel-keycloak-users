@@ -3,14 +3,14 @@
 namespace berthott\KeycloakUsers\Exceptions;
 
 use Exception;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 class KeycloakUsersException extends Exception
 {
     /**
      * The recommended response to send to the client.
      *
-     * @var ClientException
+     * @var RequestException
      */
     private $guzzleException;
 
@@ -20,7 +20,7 @@ class KeycloakUsersException extends Exception
      * @param  \Symfony\Component\HttpFoundation\Response|null  $response
      * @return void
      */
-    public function __construct(ClientException $guzzleException = null)
+    public function __construct(RequestException $guzzleException = null)
     {
         parent::__construct('The request to Keycloak failed.');
 
