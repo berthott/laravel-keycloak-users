@@ -1,6 +1,6 @@
 {
   "name": "berthott/laravel-keycloak-users",
-  "description": "Laravel user maintanance in keycloak",
+  "description": "Laravel user administration in Keycloak",
   "license": "MIT",
   "authors": [
       {
@@ -28,6 +28,6 @@
   "require": {
     "guzzlehttp/guzzle": "^7.3",
     "mnikoei/laravel-keycloak-admin": "dev-master",
-    "berthott/laravel-crudable": "1.0.0"
+    "berthott/laravel-crudable": "^1.0"
   }
 }

@@ -43,9 +43,19 @@ class KeycloakUsersServiceProvider extends ServiceProvider
 
         // load migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/Migrations');
+
+        // publish migrations
+        $this->publishes([
+            __DIR__ . '/../database/migrations/2014_10_12_000000_create_users_table.php' => database_path('migrations/2014_10_12_000000_create_users_table.php'),
+        ], 'migrations');
         
         // load views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'keycloak-users');
+
+        // publish view
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/keycloak-users'),
+        ], 'views');
 
         // observe user
         User::observe(UserObserver::class);
