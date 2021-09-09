@@ -3,6 +3,7 @@
 namespace berthott\KeycloakUsers\Services;
 
 use berthott\KeycloakUsers\Models\User;
+use Illuminate\Support\Facades\Schema;
 use Mnikoei\Facades\KeycloakAdmin;
 
 class KeycloakUsersService {
@@ -21,7 +22,9 @@ class KeycloakUsersService {
    * @return void
    */
   public function init() {
-    $this->syncUsers();
+    if (Schema::hasTable('users')) {
+      $this->syncUsers();
+    }
   }
 
   /**
