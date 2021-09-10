@@ -23,7 +23,7 @@ class UserObserver
      */
     public function creating(User $user)
     {
-      $user->username = "$user->firstName.$user->lastName";
+      $user->username = $this->username($user);
       $this->captureExceptions(function () use ($user) {
         $password = Str::random(12);;
         $createdUser = KeycloakAdmin::user()->create([
@@ -54,9 +54,9 @@ class UserObserver
      * @param  \App\Models\User  $user
      * @return void
      */
-    public function updated(User $user)
+    public function updating(User $user)
     {
-      $user->username = "$user->firstName.$user->lastName";
+      $user->username = $this->username($user);
       $this->captureExceptions(function () use ($user) {
         KeycloakAdmin::user()->update([
           'id' => $user->id,
@@ -77,7 +77,7 @@ class UserObserver
      * @param  \App\Models\User  $user
      * @return void
      */
-    public function deleted(User $user)
+    public function deleting(User $user)
     {
       $this->captureExceptions(function () use ($user) {
         KeycloakAdmin::user()->delete([
@@ -99,5 +99,16 @@ class UserObserver
         } catch (RequestException $e) {
           throw new KeycloakUsersException($e);
         }
+    }
+
+    /**
+     * Get the username
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    private function username(User $user): string
+    {
+      return Str::lower("$user->firstName.$user->lastName");
     }
 }

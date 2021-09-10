@@ -4,6 +4,7 @@ namespace berthott\KeycloakUsers\Models;
 
 
 use berthott\Crudable\Models\Traits\Crudable;
+use berthott\KeycloakUsers\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -44,5 +45,17 @@ class User extends Model
                 ($id ? Rule::unique('users')->ignore($id) : 'unique:users')
             ],
         ];
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        // observe user
+        static::observe(UserObserver::class);
     }
 }

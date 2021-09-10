@@ -3,8 +3,6 @@
 namespace berthott\KeycloakUsers;
 
 use berthott\KeycloakUsers\Facades\KeycloakUsers;
-use berthott\KeycloakUsers\Models\User;
-use berthott\KeycloakUsers\Observers\UserObserver;
 use berthott\KeycloakUsers\Services\KeycloakUsersService;
 use Illuminate\Support\ServiceProvider;
 
@@ -56,9 +54,6 @@ class KeycloakUsersServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/keycloak-users'),
         ], 'views');
-
-        // observe user
-        User::observe(UserObserver::class);
 
         // init singleton
         KeycloakUsers::init();
