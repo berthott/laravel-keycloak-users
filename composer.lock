@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "931eee8abf356b87d2369bcc500103ce",
+    "content-hash": "f86bee5a355172983174ee95d5a24e72",
     "packages": [
         {
             "name": "berthott/laravel-crudable",
@@ -384,6 +384,61 @@
             "time": "2021-09-05T19:59:03+00:00"
         },
         {
+            "name": "haizad/laravel-keycloak-admin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/haizad/laravel-keycloak-admin.git",
+                "reference": "4d481fc19a49ff7b217e7b8da19449ef99208950"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/haizad/laravel-keycloak-admin/zipball/4d481fc19a49ff7b217e7b8da19449ef99208950",
+                "reference": "4d481fc19a49ff7b217e7b8da19449ef99208950",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelKeycloakAdmin\\KeycloakAdminServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelKeycloakAdmin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mnikoei",
+                    "email": "mohsen.nikoei@gmail.com",
+                    "homepage": "https://github.com/Mnikoei",
+                    "role": "developer creator"
+                },
+                {
+                    "name": "Haizad",
+                    "email": "haizadannuar@gmail.com",
+                    "homepage": "https://github.com/haizad",
+                    "role": "contributing developer"
+                }
+            ],
+            "description": "Keycloak Admin Rest API for Laravel/Lumen",
+            "support": {
+                "source": "https://github.com/haizad/laravel-keycloak-admin/tree/1.9"
+            },
+            "time": "2021-02-04T07:50:18+00:00"
+        },
+        {
             "name": "haydenpierce/class-finder",
             "version": "dev-master",
             "source": {
@@ -428,54 +483,6 @@
                 "issues": "https://gitlab.com/api/v4/projects/7670051/issues"
             },
             "time": "2021-01-05T20:50:49+00:00"
-        },
-        {
-            "name": "mnikoei/laravel-keycloak-admin",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Mnikoei/laravel-keycloak-admin.git",
-                "reference": "4950cd661f33e710f66973282a2d1969c674b56d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Mnikoei/laravel-keycloak-admin/zipball/4950cd661f33e710f66973282a2d1969c674b56d",
-                "reference": "4950cd661f33e710f66973282a2d1969c674b56d",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "*"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mnikoei\\KeycloakAdminServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mnikoei\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "mnikoei",
-                    "email": "mohsen.nikoei@gmail.com"
-                }
-            ],
-            "description": "This package supports Keycloak admin client api`s",
-            "support": {
-                "issues": "https://github.com/Mnikoei/laravel-keycloak-admin/issues",
-                "source": "https://github.com/Mnikoei/laravel-keycloak-admin/tree/master"
-            },
-            "time": "2021-01-24T21:22:45+00:00"
         },
         {
             "name": "psr/http-client",
@@ -1440,12 +1447,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "cc13463ebca7325ec61810a37d5b4c0d4b3eaf29"
+                "reference": "6a7e8e712079c14ea85ce227d3ffc794d1f0a7ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/cc13463ebca7325ec61810a37d5b4c0d4b3eaf29",
-                "reference": "cc13463ebca7325ec61810a37d5b4c0d4b3eaf29",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6a7e8e712079c14ea85ce227d3ffc794d1f0a7ff",
+                "reference": "6a7e8e712079c14ea85ce227d3ffc794d1f0a7ff",
                 "shasum": ""
             },
             "require": {
@@ -1601,7 +1608,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-09-08T16:52:26+00:00"
+            "time": "2021-09-09T14:15:52+00:00"
         },
         {
             "name": "league/commonmark",
@@ -1609,12 +1616,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "ba2c74c0877e3e8180f91a3e0db8a7f5394c84e4"
+                "reference": "480e82d76142e64b6ef359d8c766646b61fd29c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/ba2c74c0877e3e8180f91a3e0db8a7f5394c84e4",
-                "reference": "ba2c74c0877e3e8180f91a3e0db8a7f5394c84e4",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/480e82d76142e64b6ef359d8c766646b61fd29c3",
+                "reference": "480e82d76142e64b6ef359d8c766646b61fd29c3",
                 "shasum": ""
             },
             "require": {
@@ -1713,7 +1720,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-08T19:38:50+00:00"
+            "time": "2021-09-09T19:39:39+00:00"
         },
         {
             "name": "league/config",
@@ -2340,12 +2347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "8a92c9450743ee22e103818f05bdffa723db4abf"
+                "reference": "9e28c812ffac1a2236ef9736b49e33268e46b4ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/8a92c9450743ee22e103818f05bdffa723db4abf",
-                "reference": "8a92c9450743ee22e103818f05bdffa723db4abf",
+                "url": "https://api.github.com/repos/nette/utils/zipball/9e28c812ffac1a2236ef9736b49e33268e46b4ce",
+                "reference": "9e28c812ffac1a2236ef9736b49e33268e46b4ce",
                 "shasum": ""
             },
             "require": {
@@ -2417,7 +2424,7 @@
                 "issues": "https://github.com/nette/utils/issues",
                 "source": "https://github.com/nette/utils/tree/v3.2"
             },
-            "time": "2021-08-24T23:27:13+00:00"
+            "time": "2021-09-09T16:52:20+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3044,33 +3051,34 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.13.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "be1996ed8adc35c3fd795488a653f4b518be70ea"
+                "reference": "8fb31505731979e30515bdb9d097bbb51ec4ce3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/be1996ed8adc35c3fd795488a653f4b518be70ea",
-                "reference": "be1996ed8adc35c3fd795488a653f4b518be70ea",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/8fb31505731979e30515bdb9d097bbb51ec4ce3d",
+                "reference": "8fb31505731979e30515bdb9d097bbb51ec4ce3d",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.2",
-                "php": "^7.2 || ~8.0, <8.1",
+                "php": "^7.2 || ~8.0, <8.2",
                 "phpdocumentor/reflection-docblock": "^5.2",
                 "sebastian/comparator": "^3.0 || ^4.0",
                 "sebastian/recursion-context": "^3.0 || ^4.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^6.0",
+                "phpspec/phpspec": "^6.0 || ^7.0",
                 "phpunit/phpunit": "^8.0 || ^9.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -3105,9 +3113,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/1.13.0"
+                "source": "https://github.com/phpspec/prophecy/tree/master"
             },
-            "time": "2021-03-17T13:42:18+00:00"
+            "time": "2021-09-09T18:32:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4993,16 +5001,16 @@
         },
         {
             "name": "spatie/laravel-ray",
-            "version": "1.25.1",
+            "version": "1.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ray.git",
-                "reference": "67481e11a026835f72652e073527dc11a85fcce8"
+                "reference": "9379ed902a42d8909051d9bd5ca05a7329be7b87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/67481e11a026835f72652e073527dc11a85fcce8",
-                "reference": "67481e11a026835f72652e073527dc11a85fcce8",
+                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/9379ed902a42d8909051d9bd5ca05a7329be7b87",
+                "reference": "9379ed902a42d8909051d9bd5ca05a7329be7b87",
                 "shasum": ""
             },
             "require": {
@@ -5059,7 +5067,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-ray/issues",
-                "source": "https://github.com/spatie/laravel-ray/tree/1.25.1"
+                "source": "https://github.com/spatie/laravel-ray/tree/1.25.2"
             },
             "funding": [
                 {
@@ -5071,7 +5079,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-09-07T07:27:13+00:00"
+            "time": "2021-09-10T07:21:33+00:00"
         },
         {
             "name": "spatie/macroable",
@@ -5125,16 +5133,16 @@
         },
         {
             "name": "spatie/ray",
-            "version": "1.30.1",
+            "version": "1.30.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ray.git",
-                "reference": "a189f18b7f1d944859a434e31a3c467591013056"
+                "reference": "f6344f8abf3ede60c963d9d3f7f35fb526b6138c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ray/zipball/a189f18b7f1d944859a434e31a3c467591013056",
-                "reference": "a189f18b7f1d944859a434e31a3c467591013056",
+                "url": "https://api.github.com/repos/spatie/ray/zipball/f6344f8abf3ede60c963d9d3f7f35fb526b6138c",
+                "reference": "f6344f8abf3ede60c963d9d3f7f35fb526b6138c",
                 "shasum": ""
             },
             "require": {
@@ -5184,7 +5192,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/ray/issues",
-                "source": "https://github.com/spatie/ray/tree/1.30.1"
+                "source": "https://github.com/spatie/ray/tree/1.30.2"
             },
             "funding": [
                 {
@@ -5196,7 +5204,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-09-07T12:49:09+00:00"
+            "time": "2021-09-10T07:22:57+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5379,12 +5387,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "f7d6c0f659682b080af1c787b7e7eaecc2886033"
+                "reference": "44b933f98bb4b5220d10bed9ce5662f8c2d13dcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/f7d6c0f659682b080af1c787b7e7eaecc2886033",
-                "reference": "f7d6c0f659682b080af1c787b7e7eaecc2886033",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/44b933f98bb4b5220d10bed9ce5662f8c2d13dcc",
+                "reference": "44b933f98bb4b5220d10bed9ce5662f8c2d13dcc",
                 "shasum": ""
             },
             "require": {
@@ -5437,7 +5445,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-17T14:20:01+00:00"
+            "time": "2021-09-09T08:06:01+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -5891,12 +5899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "ea5ba8c12074eb594f0c146c424ffba00f3eb5ad"
+                "reference": "c026f4b8c3b9afa2ccb9538434d63147ed16b5ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/ea5ba8c12074eb594f0c146c424ffba00f3eb5ad",
-                "reference": "ea5ba8c12074eb594f0c146c424ffba00f3eb5ad",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/c026f4b8c3b9afa2ccb9538434d63147ed16b5ea",
+                "reference": "c026f4b8c3b9afa2ccb9538434d63147ed16b5ea",
                 "shasum": ""
             },
             "require": {
@@ -5995,7 +6003,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-07T12:42:36+00:00"
+            "time": "2021-09-10T07:24:55+00:00"
         },
         {
             "name": "symfony/mime",
@@ -7283,12 +7291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "c9b1032a9fcd3fc64d4b4d6890c8d6f161480aca"
+                "reference": "cc230e4e3e5a9fdade8d8f067ac1dfc8390506ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/c9b1032a9fcd3fc64d4b4d6890c8d6f161480aca",
-                "reference": "c9b1032a9fcd3fc64d4b4d6890c8d6f161480aca",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/cc230e4e3e5a9fdade8d8f067ac1dfc8390506ba",
+                "reference": "cc230e4e3e5a9fdade8d8f067ac1dfc8390506ba",
                 "shasum": ""
             },
             "require": {
@@ -7372,7 +7380,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-07T15:12:45+00:00"
+            "time": "2021-09-10T07:32:14+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -8141,7 +8149,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "mnikoei/laravel-keycloak-admin": 20
+        "haizad/laravel-keycloak-admin": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

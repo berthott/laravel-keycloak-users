@@ -4,7 +4,7 @@ namespace berthott\KeycloakUsers\Services;
 
 use berthott\KeycloakUsers\Models\User;
 use Illuminate\Support\Facades\Schema;
-use Mnikoei\Facades\KeycloakAdmin;
+use LaravelKeycloakAdmin\Facades\KeycloakAdmin;
 
 class KeycloakUsersService {
 

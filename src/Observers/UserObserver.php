@@ -8,8 +8,8 @@ use berthott\KeycloakUsers\Mail\NewUserMail;
 use berthott\KeycloakUsers\Models\User;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Mail;
-use Mnikoei\Facades\KeycloakAdmin;
 use Illuminate\Support\Str;
+use LaravelKeycloakAdmin\Facades\KeycloakAdmin;
 
 class UserObserver
 {
