@@ -40,7 +40,7 @@ class KeycloakUsersServiceProvider extends ServiceProvider
         ], 'config');
 
         // load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/../database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         // publish migrations
         $this->publishes([
