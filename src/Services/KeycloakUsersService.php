@@ -3,6 +3,7 @@
 namespace berthott\KeycloakUsers\Services;
 
 use berthott\KeycloakUsers\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use LaravelKeycloakAdmin\Facades\KeycloakAdmin;
 
@@ -22,7 +23,7 @@ class KeycloakUsersService {
    * @return void
    */
   public function init() {
-    if (Schema::hasTable('users')) {
+    if (!App::runningInConsole() && Schema::hasTable('users')) {
       $this->syncUsers();
     }
   }
@@ -38,7 +39,7 @@ class KeycloakUsersService {
     $keycloakUsers = collect(KeycloakAdmin::user()->all());
     foreach (User::all() as $user) {
       if ($keycloakUsers->contains(function ($keycloakUser) use ($user) {
-        return $keycloakUser['id'] == $user->id;
+        return $keycloakUser['id'] == $user->keycloak_id;
       })) {
         continue;
       }
@@ -52,8 +53,14 @@ class KeycloakUsersService {
     foreach($keycloakUsers as $keycloakUser) {
       User::withoutEvents(function () use ($keycloakUser, $fillableFields) {
         User::updateOrCreate(
-          ['id' => $keycloakUser['id']], 
-          array_intersect_key($keycloakUser, array_fill_keys($fillableFields, ''))
+          ['keycloak_id' => $keycloakUser['id']], 
+          array_merge(
+            ['keycloak_id' => $keycloakUser['id']],
+            array_intersect_key(
+              $keycloakUser,
+              array_fill_keys($fillableFields, '')
+            )
+          )
         );
       });
     }

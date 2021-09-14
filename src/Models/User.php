@@ -5,10 +5,10 @@ namespace berthott\KeycloakUsers\Models;
 
 use berthott\Crudable\Models\Traits\Crudable;
 use berthott\KeycloakUsers\Observers\UserObserver;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 
-class User extends Model
+class User extends Authenticatable
 {
     use Crudable;
 
@@ -25,7 +25,7 @@ class User extends Model
      * @var array
      */
     public $fillable = [
-        'id',
+        'keycloak_id',
         'firstName',
         'lastName',
         'username',

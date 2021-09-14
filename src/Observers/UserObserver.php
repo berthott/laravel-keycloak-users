@@ -43,7 +43,7 @@ class UserObserver
             'temporary' => true,
           ]
         ]);
-        $user->id = $createdUser['id'];
+        $user->keycloak_id = $createdUser['id'];
         Mail::to($user)->send(new NewUserMail($user, $password));
       });
     }
@@ -59,7 +59,7 @@ class UserObserver
       $user->username = $this->username($user);
       $this->captureExceptions(function () use ($user) {
         KeycloakAdmin::user()->update([
-          'id' => $user->id,
+          'id' => $user->keycloak_id,
           'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
             'username' => $user->username,
             'firstName' => $user->firstName,
@@ -81,7 +81,7 @@ class UserObserver
     {
       $this->captureExceptions(function () use ($user) {
         KeycloakAdmin::user()->delete([
-          'id' => $user->id
+          'id' => $user->keycloak_id
         ]);
       });
     }
