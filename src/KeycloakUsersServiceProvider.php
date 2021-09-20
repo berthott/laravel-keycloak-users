@@ -10,10 +10,8 @@ class KeycloakUsersServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         // bind singleton
         $this->app->singleton('KeycloakUsers', function () {
@@ -27,12 +25,9 @@ class KeycloakUsersServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-
         // publish config
         $this->publishes([
             __DIR__.'/../config/config.php' => config_path('keycloak-users.php'),
@@ -40,13 +35,13 @@ class KeycloakUsersServiceProvider extends ServiceProvider
         ], 'config');
 
         // load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         // publish migrations
         $this->publishes([
-            __DIR__ . '/../database/migrations/2014_10_12_000000_create_users_table.php' => database_path('migrations/2014_10_12_000000_create_users_table.php'),
+            __DIR__.'/../database/migrations/2014_10_12_000000_create_users_table.php' => database_path('migrations/2014_10_12_000000_create_users_table.php'),
         ], 'migrations');
-        
+
         // load views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'keycloak-users');
 
@@ -58,8 +53,8 @@ class KeycloakUsersServiceProvider extends ServiceProvider
         // init singleton
         KeycloakUsers::init();
     }
-    
-    protected function routeConfiguration()
+
+    protected function routeConfiguration(): array
     {
         return [
             'middleware' => config('keycloak-users.middleware'),

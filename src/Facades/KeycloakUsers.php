@@ -4,12 +4,10 @@ namespace berthott\KeycloakUsers\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-
 class KeycloakUsers extends Facade
 {
-    protected static function getFacadeAccessor(){
-
+    protected static function getFacadeAccessor(): string
+    {
         return 'KeycloakUsers';
-
     }
 }

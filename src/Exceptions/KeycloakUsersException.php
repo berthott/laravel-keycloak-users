@@ -4,23 +4,21 @@ namespace berthott\KeycloakUsers\Exceptions;
 
 use Exception;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class KeycloakUsersException extends Exception
 {
     /**
      * The recommended response to send to the client.
-     *
-     * @var RequestException
      */
-    private $guzzleException;
+    private RequestException $guzzleException;
 
     /**
      * Create a new exception instance.
-     *
-     * @param  \Symfony\Component\HttpFoundation\Response|null  $response
-     * @return void
      */
-    public function __construct(RequestException $guzzleException = null)
+    public function __construct(RequestException|null $guzzleException = null)
     {
         parent::__construct('The request to Keycloak failed.');
 
@@ -29,13 +27,11 @@ class KeycloakUsersException extends Exception
 
     /**
      * Render the exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function render($request)
+    public function render(/* Request $request */): JsonResponse
     {
-        $r = $this->guzzleException->getResponse();
-        return response()->json(json_decode($r->getBody()->getContents()), $r->getStatusCode());
+        $response = $this->guzzleException->getResponse();
+
+        return response()->json(json_decode($response->getBody()->getContents()), $response->getStatusCode());
     }
 }

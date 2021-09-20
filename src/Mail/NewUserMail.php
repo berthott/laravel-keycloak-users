@@ -2,32 +2,30 @@
 
 namespace berthott\KeycloakUsers\Mail;
 
+use berthott\KeycloakUsers\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class NewUserMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The new users plain password.
      */
-    private $password;
+    private string $password;
 
     /**
      * The who sents the email.
      */
-    private $user;
+    private User $user;
 
     /**
      * Create a new message instance.
-     *
-     * @param App\Models\Auth\User  $user
-     * @param string                $password
-     * @return void
      */
-    public function __construct($user, $password)
+    public function __construct(User $user, string $password)
     {
         $this->user = $user;
         $this->password = $password;
@@ -35,10 +33,8 @@ class NewUserMail extends Mailable
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): self
     {
         return $this->from(config('keycloak-users.mail.from.address'), config('keycloak-users.mail.from.name'))
                     ->subject(config('keycloak-users.mail.subject'))
@@ -46,7 +42,7 @@ class NewUserMail extends Mailable
                     ->with([
                         'user' => $this->user,
                         'password' => $this->password,
-                        'loginLink' => config('keycloak-users.mail.link')
+                        'loginLink' => config('keycloak-users.mail.link'),
                     ]);
     }
 }
