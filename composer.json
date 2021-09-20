@@ -27,7 +27,7 @@
   },
   "require": {
     "guzzlehttp/guzzle": "^7.3",
-    "berthott/laravel-crudable": "dev-master",
+    "berthott/laravel-crudable": "^1.0",
     "haizad/laravel-keycloak-admin": "dev-master"
   }
 }
