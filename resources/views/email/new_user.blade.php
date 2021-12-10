@@ -1,7 +1,7 @@
 @component('mail::message')
 # Hallo {{ $user->firstName }} {{ $user->lastName }},
 
-Für Sie wurde ein Nutzer-Konto für {{ config('keycloak-users.mail.from.name') }} erstellt. Sie können sich nun mit ihrer E-Mail-Adresse anmelden.
+Für Sie wurde ein Nutzer-Konto für {{ config('keycloak-users.mail.from.name') }} erstellt. Sie können sich nun mit Ihrer E-Mail-Adresse anmelden.
 Ihr automatisch generiertes Passwort lautet:
 
 {{ $password }}
