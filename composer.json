@@ -13,6 +13,11 @@
           "berthott\\KeycloakUsers\\": "src"
       }
   },
+  "autoload-dev": {
+      "psr-4": {
+          "berthott\\KeycloakUsers\\Tests\\": "tests"
+      }
+  },
   "extra" : {
       "laravel" : {
           "providers" : [

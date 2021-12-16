@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  bootstrap="vendor/autoload.php"
+  backupGlobals="false"
+  cacheResult="false"
+  backupStaticAttributes="false"
+  colors="true"
+  verbose="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Feature">
+      <directory suffix="Test.php">./tests/Feature</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="DB_CONNECTION" value="testing"/>
+    <env name="APP_KEY" value="base64:2fl+Ktvkfl+Fuz4Qp/A75G2RTiWVA/ZoKZvp6fiiM10="/>
+    <env name="KEYCLOAK_BASE_URL" value="https://login.syspons.com/auth"/>
+    <env name="KEYCLOAK_REALM" value="test"/>
+    <env name="KEYCLOAK_REALM_PUBLIC_KEY" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqDtlHa63kWr3tYvdVwwFvFJ50KezAt+2kf2gx0nkqeylCa9dikOvNPSNdMk+sJ+6zuM9gTqLK+wqFWtrTw9AE6CHBpI1aCH61zuvM96cxuJY7zfaeakeapTOngCGqPCxrtCqjHTRKWiHW+chyzgS2LXz92H1enrntyG2YiAJvzuREUH3utKrkkveOrIifw6OroUrSJ4rG1ut3bRWhNreVHdAjS12J0GtDvR5YHIxkGGY3LdfYH1k6PS+9kq/nIbLl1o2AjkKWeQBBIjkXCVs9R/lTW5gyhZuyDZRSqDPg6E5s4p8Ck3vi219KXsZGW76XWJskelIaaVzJYSlY+ePfQIDAQAB"/>
+    <env name="KEYCLOAK_ADMIN_CLIENT_ID" value="test-api"/>
+    <env name="KEYCLOAK_ADMIN_CLIENT_SECRET" value="1c54e386-4a1e-4b12-bafd-80aae03c6934"/>
+  </php>
+</phpunit>

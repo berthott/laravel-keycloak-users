@@ -21,7 +21,7 @@ class KeycloakUsersService
      */
     public function init(): void
     {
-        if (!App::runningInConsole() && Schema::hasTable('users')) {
+        if ((!App::runningInConsole() || App::runningUnitTests()) && Schema::hasTable('users')) {
             $this->syncUsers();
         }
     }
@@ -53,8 +53,8 @@ class KeycloakUsersService
                     array_merge(
                         ['keycloak_id' => $keycloakUser['id']],
                         array_intersect_key(
-                        $keycloakUser,
-                        array_fill_keys($fillableFields, '')
+                            $keycloakUser,
+                            array_fill_keys($fillableFields, '')
                         )
                     )
                 );
