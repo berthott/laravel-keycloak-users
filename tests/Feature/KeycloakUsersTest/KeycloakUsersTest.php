@@ -4,11 +4,11 @@ namespace berthott\KeycloakUsers\Tests\Feature\KeycloakUsersTest;
 
 use berthott\KeycloakUsers\Facades\KeycloakUsers;
 use berthott\KeycloakUsers\Mail\NewUserMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use LaravelKeycloakAdmin\Facades\KeycloakAdmin;
 
 class KeycloakUsersTest extends KeycloakUsersTestCase
 {
@@ -20,6 +20,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
           'users.show',
           'users.update',
           'users.destroy',
+          'users.current',
         ];
         $registeredRoutes = array_keys(Route::getRoutes()->getRoutesByName());
         foreach ($expectedRoutes as $route) {
@@ -48,6 +49,10 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
             'username' => 'test.test',
         ]);
     }
+
+    /**
+     * We are testing the whole feature in one method, to leave a clean state inside keycloak.
+     */
 
     public function test_keycloak_interaction(): void
     {
@@ -87,5 +92,21 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         KeycloakUsers::init();
         $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
         $this->assertDatabaseCount('users', 1);
+    }
+
+    public function test_current_user(): void
+    {
+        KeycloakUsers::init();
+        $user = User::first();
+        $attributes = array_intersect_key($user->getAttributes(), array_fill_keys([
+          'username',
+          'firstName',
+          'lastName',
+          'email',
+        ], ''));
+        $this->actingAs($user);
+        $this->get(route('users.current'))
+            ->assertStatus(200)
+            ->assertJson($attributes);
     }
 }

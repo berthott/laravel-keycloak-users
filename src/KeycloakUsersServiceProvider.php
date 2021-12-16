@@ -3,7 +3,9 @@
 namespace berthott\KeycloakUsers;
 
 use berthott\KeycloakUsers\Facades\KeycloakUsers;
+use berthott\KeycloakUsers\Http\Controllers\KeycloakUsersController;
 use berthott\KeycloakUsers\Services\KeycloakUsersService;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class KeycloakUsersServiceProvider extends ServiceProvider
@@ -50,6 +52,11 @@ class KeycloakUsersServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views' => resource_path('views/vendor/keycloak-users'),
         ], 'views');
 
+        // add routes
+        Route::group($this->routeConfiguration(), function () {
+            Route::get('users/current', [KeycloakUsersController::class, 'current'])->name('users.current');
+        });
+
         // init singleton
         KeycloakUsers::init();
     }
@@ -58,6 +65,7 @@ class KeycloakUsersServiceProvider extends ServiceProvider
     {
         return [
             'middleware' => config('keycloak-users.middleware'),
+            'prefix' => config('crudable.prefix'),
         ];
     }
 }
