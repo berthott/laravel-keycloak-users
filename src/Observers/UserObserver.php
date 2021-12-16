@@ -24,22 +24,22 @@ class UserObserver
         $this->captureExceptions(function () use ($user) {
             $password = Str::random(12);
             $createdUser = KeycloakAdmin::user()->create([
-          'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
-            'username' => $user->username,
-            'firstName' => $user->firstName,
-            'lastName' => $user->lastName,
-            'email' => $user->email,
-            'enabled' => true,
-          ],
-        ]);
+              'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
+                'username' => $user->username,
+                'firstName' => $user->firstName,
+                'lastName' => $user->lastName,
+                'email' => $user->email,
+                'enabled' => true,
+              ],
+            ]);
             KeycloakAdmin::user()->setTemporaryPassword([
-          'id' => $createdUser['id'],
-          'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
-            'type' => 'password',
-            'value' => $password,
-            'temporary' => true,
-          ],
-        ]);
+              'id' => $createdUser['id'],
+              'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
+                'type' => 'password',
+                'value' => $password,
+                'temporary' => true,
+              ],
+            ]);
             $user->keycloak_id = $createdUser['id'];
             Mail::to($user)->send(new NewUserMail($user, $password));
         });
@@ -53,14 +53,14 @@ class UserObserver
         $user->username = $this->username($user);
         $this->captureExceptions(function () use ($user) {
             KeycloakAdmin::user()->update([
-          'id' => $user->keycloak_id,
-          'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
-            'username' => $user->username,
-            'firstName' => $user->firstName,
-            'lastName' => $user->lastName,
-            'email' => $user->email,
-          ],
-        ]);
+              'id' => $user->keycloak_id,
+              'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
+                'username' => $user->username,
+                'firstName' => $user->firstName,
+                'lastName' => $user->lastName,
+                'email' => $user->email,
+              ],
+            ]);
         });
     }
 

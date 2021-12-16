@@ -49,15 +49,15 @@ class KeycloakUsersService
         foreach ($keycloakUsers as $keycloakUser) {
             User::withoutEvents(function () use ($keycloakUser, $fillableFields) {
                 User::updateOrCreate(
-          ['keycloak_id' => $keycloakUser['id']],
-          array_merge(
-            ['keycloak_id' => $keycloakUser['id']],
-            array_intersect_key(
-              $keycloakUser,
-              array_fill_keys($fillableFields, '')
-            )
-          )
-        );
+                    ['keycloak_id' => $keycloakUser['id']],
+                    array_merge(
+                        ['keycloak_id' => $keycloakUser['id']],
+                        array_intersect_key(
+                        $keycloakUser,
+                        array_fill_keys($fillableFields, '')
+                        )
+                    )
+                );
             });
         }
     }
