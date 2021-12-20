@@ -54,7 +54,7 @@ class KeycloakUsersServiceProvider extends ServiceProvider
 
         // add routes
         Route::group($this->routeConfiguration(), function () {
-            Route::get('users/current', [KeycloakUsersController::class, 'current'])->name('users.current');
+            Route::get('currentUser', [KeycloakUsersController::class, 'current'])->name('users.current');
         });
 
         // init singleton
@@ -64,7 +64,7 @@ class KeycloakUsersServiceProvider extends ServiceProvider
     protected function routeConfiguration(): array
     {
         return [
-            'middleware' => config('keycloak-users.middleware'),
+            'middleware' => config('crudable.middleware'),
             'prefix' => config('crudable.prefix'),
         ];
     }
