@@ -53,7 +53,6 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
     /**
      * We are testing the whole feature in one method, to leave a clean state inside keycloak.
      */
-
     public function test_keycloak_interaction(): void
     {
         // creation
