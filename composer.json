@@ -26,12 +26,12 @@
       }
   },
   "require-dev": {
-    "orchestra/testbench": "^6.0",
+    "orchestra/testbench": "^7.0",
     "phpunit/phpunit": "^9.5"
   },
   "require": {
     "guzzlehttp/guzzle": "^7.3",
-    "berthott/laravel-crudable": "^1.0|@dev",
+    "berthott/laravel-crudable": "^2.0",
     "haizad/laravel-keycloak-admin": "^1.9"
   }
 }
