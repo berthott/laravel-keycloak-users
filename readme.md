@@ -20,6 +20,8 @@ KEYCLOAK_ADMIN_CLIENT_SECRET=
 ### In Keycloak
 Setup a client, with `Access Type: confidential` and `Service Accounts Enabled: true`.
 Set `Realm Settings > Login > Edit Username: true`.
+Add `manage-users, query-users, view-users` to `Roles > Default Roles > realm-management`.
+Add the value chosen for keycloak-webs KEYCLOAK_ALLOWED_RESOURCES to `Clients > (your Web Client) > Mappers` as Hardcoded Role.
 
 ## Usage
 
