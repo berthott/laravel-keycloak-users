@@ -93,6 +93,44 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         $this->assertDatabaseCount('users', 1);
     }
 
+    /**
+     * We are testing the whole feature in one method, to leave a clean state inside keycloak.
+     */
+    public function test_keycloak_interaction_routes(): void
+    {
+        // creation
+        Mail::fake();
+        KeycloakUsers::init();
+        $this->assertDatabaseMissing('users', ['username' => 'testfirst.testlast']);
+        $this->assertDatabaseCount('users', 1);
+        $id = $this->post(route('users.store'), [
+            'firstName' => 'Testfirst',
+            'lastName' => 'Testlast',
+            'email' => 'testfirst.testlast@test.com'
+        ])
+            ->assertStatus(201)
+            ->json()['id'];
+        Mail::assertSent(NewUserMail::class);
+        $this->assertDatabaseHas('users', ['username' => 'testfirst.testlast']);
+        $this->assertDatabaseCount('users', 2);
+
+        // update
+        $this->put(route('users.update', ['user' => $id]), [
+            'firstName' => 'changed',
+            'lastName' => 'Testlast',
+            'email' => 'testfirst.testlast@test.com'
+        ])
+            ->assertStatus(200);
+        $this->assertDatabaseHas('users', ['username' => 'changed.testlast']);
+        $this->assertDatabaseCount('users', 2);
+
+        // deletion
+        $this->delete(route('users.destroy', ['user' => $id]))
+            ->assertStatus(200);
+        $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
+        $this->assertDatabaseCount('users', 1);
+    }
+
     public function test_current_user(): void
     {
         KeycloakUsers::init();
@@ -107,5 +145,43 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         $this->get(route('users.current'))
             ->assertStatus(200)
             ->assertJson($attributes);
+    }
+
+    /**
+     * We are testing the whole feature in one method, to leave a clean state inside keycloak.
+     */
+    public function test_keycloak_exception(): void
+    {
+        // creation
+        Mail::fake();
+        KeycloakUsers::init();
+        $this->assertDatabaseMissing('users', ['username' => 'testfirst.testlast']);
+        $this->assertDatabaseCount('users', 1);
+        $id = $this->post(route('users.store'), [
+            'firstName' => 'Testfirst',
+            'lastName' => 'Testlast',
+            'email' => 'testfirst.testlast@test.com'
+        ])
+            ->assertStatus(201)
+            ->json()['id'];
+        $this->assertDatabaseHas('users', ['username' => 'testfirst.testlast']);
+        $this->assertDatabaseCount('users', 2);
+
+        // create user with same name, different mail address
+        $this->post(route('users.store'), [
+            'firstName' => 'Testfirst',
+            'lastName' => 'Testlast',
+            'email' => 'test.test@test.com'
+        ])
+            ->assertStatus(422)
+            ->assertJson([
+                'errors' => 'User exists with same username'
+            ]);
+
+        // deletion
+        $this->delete(route('users.destroy', ['user' => $id]))
+            ->assertStatus(200);
+        $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
+        $this->assertDatabaseCount('users', 1);
     }
 }

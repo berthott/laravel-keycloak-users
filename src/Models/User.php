@@ -33,6 +33,8 @@ class User extends Authenticatable
                 'required', 'email',
                 ($id ? Rule::unique('users')->ignore($id) : 'unique:users'),
             ],
+            'keycloak_id' => 'nullable',
+            'username' => 'nullable',
         ];
     }
 

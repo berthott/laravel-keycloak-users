@@ -32,6 +32,6 @@ class KeycloakUsersException extends Exception
     {
         $response = $this->guzzleException->getResponse();
 
-        return response()->json(json_decode($response->getBody()->getContents()), $response->getStatusCode());
+        return response()->json(['errors' => json_decode($response->getBody()->getContents())->errorMessage], 422);
     }
 }
