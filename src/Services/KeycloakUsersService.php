@@ -2,6 +2,7 @@
 
 namespace berthott\KeycloakUsers\Services;
 
+use berthott\KeycloakUsers\Exceptions\KeycloakNoUsersException;
 use berthott\KeycloakUsers\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
@@ -33,6 +34,10 @@ class KeycloakUsersService
     {
         // delete users deleted in keycloak
         $keycloakUsers = collect(KeycloakAdmin::user()->all());
+        if (count($keycloakUsers) === 1 && $keycloakUsers[0] === true) {
+            // KeycloakAdmin returns true instead of array when empty
+            throw new KeycloakNoUsersException();
+        }
         foreach (User::all() as $user) {
             if ($keycloakUsers->contains(function ($keycloakUser) use ($user) {
                 return $keycloakUser['id'] == $user->keycloak_id;

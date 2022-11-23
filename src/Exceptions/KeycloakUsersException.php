@@ -5,8 +5,6 @@ namespace berthott\KeycloakUsers\Exceptions;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class KeycloakUsersException extends Exception
 {
