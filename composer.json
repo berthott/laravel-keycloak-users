@@ -26,13 +26,13 @@
       }
   },
   "require-dev": {
-    "orchestra/testbench": "^7.0",
-    "phpunit/phpunit": "^9.5",
+    "orchestra/testbench": "^8.0",
+    "phpunit/phpunit": "^10.0",
     "doctrine/dbal": "^3.3"
   },
   "require": {
     "guzzlehttp/guzzle": "^7.3",
-    "berthott/laravel-crudable": "^2.0",
+    "berthott/laravel-crudable": "^3.0",
     "haizad/laravel-keycloak-admin": "^1.9"
   }
 }

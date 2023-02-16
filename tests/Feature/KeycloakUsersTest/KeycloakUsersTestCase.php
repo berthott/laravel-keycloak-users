@@ -4,6 +4,7 @@ namespace berthott\KeycloakUsers\Tests\Feature\KeycloakUsersTest;
 
 use berthott\Crudable\CrudableServiceProvider;
 use berthott\KeycloakUsers\KeycloakUsersServiceProvider;
+use berthott\Scopeable\ScopeableServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use LaravelKeycloakAdmin\KeycloakAdminServiceProvider;
@@ -23,6 +24,7 @@ abstract class KeycloakUsersTestCase extends BaseTestCase
         return [
             KeycloakUsersServiceProvider::class,
             CrudableServiceProvider::class,
+            ScopeableServiceProvider::class,
             KeycloakAdminServiceProvider::class,
         ];
     }

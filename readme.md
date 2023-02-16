@@ -51,8 +51,8 @@ $ php artisan vendor:publish --provider="berthott\KeycloakUsers\KeycloakUsersSer
 
 ## Compatibility
 
-Tested with Laravel 8.x and Keycloak 14.
+Tested with Laravel 10.x and Keycloak 20.
 
 ## License
 
-See [License File](license.md). Copyright © 2021 Jan Bladt.
+See [License File](license.md). Copyright © 2023 Jan Bladt.
