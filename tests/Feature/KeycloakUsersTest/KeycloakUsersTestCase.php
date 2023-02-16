@@ -32,5 +32,6 @@ abstract class KeycloakUsersTestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app)
     {
         Config::set('crudable.namespace', __NAMESPACE__);
+        Config::set('keycloak-users.mail.link', 'http://testurl.com/login');
     }
 }

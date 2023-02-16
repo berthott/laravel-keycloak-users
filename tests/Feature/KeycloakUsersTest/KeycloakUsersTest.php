@@ -184,4 +184,50 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
         $this->assertDatabaseCount('users', 1);
     }
+
+    /**
+     * We are testing the whole feature in one method, to leave a clean state inside keycloak.
+     */
+    public function test_mail_sending(): void
+    {
+        Mail::fake();
+
+        Mail::assertNothingSent();
+
+        $user = User::create([
+          'firstName' => 'Testfirst',
+          'lastName' => 'Testlast',
+          'email' => 'testfirst.testlast@test.com'
+        ]);
+
+        Mail::assertSent(NewUserMail::class);
+
+        // deletion
+        $user->delete();
+    }
+
+    /**
+     * We are testing the whole feature in one method, to leave a clean state inside keycloak.
+     */
+    public function test_mail_content(): void
+    {
+        Mail::fake();
+
+        $user = User::create([
+          'firstName' => 'Testfirst',
+          'lastName' => 'Testlast',
+          'email' => 'testfirst.testlast@test.com'
+        ]);
+
+        $mailable = new NewUserMail($user, 'avocado');
+        $mailable->assertFrom(config('keycloak-users.mail.from.address'), config('keycloak-users.mail.from.name'));
+        //$mailable->assertTo('testfirst.testlast@test.com'); // is added when actively sending, Mail::fake restricts this
+        $mailable->assertHasReplyTo(config('keycloak-users.mail.replyTo.address'), config('keycloak-users.mail.replyTo.name'));
+        $mailable->assertHasSubject(config('keycloak-users.mail.subject'));
+        $mailable->assertSeeInOrderInHtml(['Testfirst', 'Testlast', 'avocado', 'Login']);
+        $mailable->assertSeeInOrderInText(['Testfirst', 'Testlast', 'avocado', 'http://testurl.com/login']);
+
+        // deletion
+        $user->delete();
+    }
 }
