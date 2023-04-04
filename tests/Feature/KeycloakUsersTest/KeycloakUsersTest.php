@@ -230,4 +230,40 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         // deletion
         $user->delete();
     }
+
+    /**
+     * We are testing the whole feature in one method, to leave a clean state inside keycloak.
+     */
+    public function test_over_100_users(): void
+    {
+        $num = 130;
+        Mail::fake();
+        KeycloakUsers::init();
+        
+        $this->assertDatabaseCount('users', 1);
+
+        // creation
+        foreach(range(2, $num) as $i) {
+            User::create([
+                'firstName' => "Testfirst$i",
+                'lastName' => "Testlast$i",
+                'email' => "testfirst$i.testlast$i@test.com"
+            ]);
+        }
+
+        $this->assertDatabaseCount('users', $num);
+        DB::table('users')->truncate();
+        KeycloakUsers::init();
+        $this->assertDatabaseCount('users', $num);
+        
+        // deletion
+        foreach(User::all() as $user) {
+            if ($user->id === 1) {
+                continue;
+            }
+            $user->delete();
+        }
+
+        $this->assertDatabaseCount('users', 1);
+    }
 }

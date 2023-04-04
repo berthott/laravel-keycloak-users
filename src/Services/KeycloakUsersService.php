@@ -5,6 +5,7 @@ namespace berthott\KeycloakUsers\Services;
 use berthott\KeycloakUsers\Exceptions\KeycloakNoUsersException;
 use berthott\KeycloakUsers\Facades\KeycloakLog;
 use berthott\KeycloakUsers\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use LaravelKeycloakAdmin\Facades\KeycloakAdmin;
@@ -33,15 +34,28 @@ class KeycloakUsersService
      */
     protected function syncUsers(): void
     {
-        // delete users deleted in keycloak
-        $keycloakUsers = collect(KeycloakAdmin::user()->all());
-        if (count($keycloakUsers) === 1 && $keycloakUsers[0] === true) {
-            // KeycloakAdmin returns true instead of array when empty
+        // paginate over keycloakusers
+        $keycloakUsers = collect();
+        $end = false;
+        while(!$end) {
+            $newUsers = collect(KeycloakAdmin::user()->all([
+                'query' => [
+                    'first' => $keycloakUsers->count(),
+                ]
+            ]));
+            $end = $this->noUsersReturned($newUsers);
+            if (!$end) {
+                $keycloakUsers->push(...$newUsers);
+            }
+        }
+        if ($this->noUsersReturned($keycloakUsers)) {
             KeycloakLog::log('No Keycloak Users to sync');
             throw new KeycloakNoUsersException();
         }
         $ids = $keycloakUsers->pluck('keycloak_id')->join(', ');
         KeycloakLog::log("Syncing Keycloak Users (count: {$keycloakUsers->count()}, keycloak_ids: {$ids}...");
+
+        // delete users deleted in keycloak
         foreach (User::all() as $user) {
             if ($keycloakUsers->contains(function ($keycloakUser) use ($user) {
                 return $keycloakUser['id'] == $user->keycloak_id;
@@ -70,5 +84,14 @@ class KeycloakUsersService
                 );
             });
         }
+    }
+
+    /**
+     * Has Keycloak returned users
+     */
+    private function noUsersReturned(Collection $collection): bool
+    {
+        // KeycloakAdmin returns true instead of array when empty
+        return $collection->count() === 1 && $collection[0] === true;
     }
 }
