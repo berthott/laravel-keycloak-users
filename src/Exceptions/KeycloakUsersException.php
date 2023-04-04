@@ -2,6 +2,7 @@
 
 namespace berthott\KeycloakUsers\Exceptions;
 
+use berthott\KeycloakUsers\Facades\KeycloakLog;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
@@ -28,8 +29,12 @@ class KeycloakUsersException extends Exception
      */
     public function render(/* Request $request */): JsonResponse
     {
-        $response = $this->guzzleException->getResponse();
+        $message = '';
+        if ($error = json_decode($this->guzzleException->getResponse()->getBody()->getContents())) {
+            $message = $error->errorMessage;
+        }
 
-        return response()->json(['errors' => json_decode($response->getBody()->getContents())->errorMessage], 422);
+        KeycloakLog::log("Keycloak Exception: {$message}");
+        return response()->json(['errors' => $message], 422);
     }
 }

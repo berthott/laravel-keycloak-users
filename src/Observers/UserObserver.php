@@ -94,9 +94,6 @@ class UserObserver
         try {
             $func();
         } catch (RequestException $e) {
-
-            $error = json_decode($e->getResponse()->getBody()->getContents())->errorMessage;
-            KeycloakLog::log("Keycloak Exception: {$error}");
             throw new KeycloakUsersException($e);
         }
     }
