@@ -43,9 +43,13 @@ class UserObserver
               ],
             ]);
             $user->keycloak_id = $createdUser['id'];
-            KeycloakLog::log("Keycloak User Created (id: {$user->id}, keycloak_id: {$user->keycloak_id})");
             Mail::to($user)->send(new NewUserMail($user, $password));
         });
+    }
+
+    public function created(User $user): void
+    {
+        KeycloakLog::log("Keycloak User Created (id: {$user->id}, keycloak_id: {$user->keycloak_id})");
     }
 
     /**

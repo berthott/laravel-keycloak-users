@@ -52,7 +52,7 @@ class KeycloakUsersService
             KeycloakLog::log('No Keycloak Users to sync');
             throw new KeycloakNoUsersException();
         }
-        $ids = $keycloakUsers->pluck('keycloak_id')->join(', ');
+        $ids = $keycloakUsers->pluck('id')->join(', ');
         KeycloakLog::log("Syncing Keycloak Users (count: {$keycloakUsers->count()}, keycloak_ids: {$ids}...");
 
         // delete users deleted in keycloak
