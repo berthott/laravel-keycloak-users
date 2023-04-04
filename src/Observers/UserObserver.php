@@ -3,6 +3,7 @@
 namespace berthott\KeycloakUsers\Observers;
 
 use berthott\KeycloakUsers\Exceptions\KeycloakUsersException;
+use berthott\KeycloakUsers\Facades\KeycloakLog;
 use berthott\KeycloakUsers\Mail\NewUserMail;
 use berthott\KeycloakUsers\Models\User;
 use Closure;
@@ -22,6 +23,7 @@ class UserObserver
     {
         $user->username = $this->username($user);
         $this->captureExceptions(function () use ($user) {
+            KeycloakLog::log('Creating Keycloak User...');
             $password = Str::random(12);
             $createdUser = KeycloakAdmin::user()->create([
               'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
@@ -41,6 +43,7 @@ class UserObserver
               ],
             ]);
             $user->keycloak_id = $createdUser['id'];
+            KeycloakLog::log("Keycloak User Created (id: {$user->id}, keycloak_id: {$user->keycloak_id})");
             Mail::to($user)->send(new NewUserMail($user, $password));
         });
     }
@@ -52,6 +55,7 @@ class UserObserver
     {
         $user->username = $this->username($user);
         $this->captureExceptions(function () use ($user) {
+            KeycloakLog::log('Updating Keycloak User...');
             KeycloakAdmin::user()->update([
               'id' => $user->keycloak_id,
               'body' => [  // https://www.keycloak.org/docs-api/14.0/rest-api/index.html#_userrepresentation
@@ -61,6 +65,7 @@ class UserObserver
                 'email' => $user->email,
               ],
             ]);
+            KeycloakLog::log("Keycloak User Updated (id: {$user->id}, keycloak_id: {$user->keycloak_id})");
         });
     }
 
@@ -71,9 +76,11 @@ class UserObserver
     public function deleting(User $user): void
     {
         $this->captureExceptions(function () use ($user) {
+            KeycloakLog::log('Deleting Keycloak User...');
             KeycloakAdmin::user()->delete([
               'id' => $user->keycloak_id,
             ]);
+            KeycloakLog::log("Keycloak User Deleted (id: {$user->id}, keycloak_id: {$user->keycloak_id})");
         });
     }
 
@@ -87,6 +94,9 @@ class UserObserver
         try {
             $func();
         } catch (RequestException $e) {
+
+            $error = json_decode($e->getResponse()->getBody()->getContents())->errorMessage;
+            KeycloakLog::log("Keycloak Exception: {$error}");
             throw new KeycloakUsersException($e);
         }
     }

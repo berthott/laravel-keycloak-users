@@ -3,6 +3,7 @@
 namespace berthott\KeycloakUsers\Services;
 
 use berthott\KeycloakUsers\Exceptions\KeycloakNoUsersException;
+use berthott\KeycloakUsers\Facades\KeycloakLog;
 use berthott\KeycloakUsers\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
@@ -36,8 +37,11 @@ class KeycloakUsersService
         $keycloakUsers = collect(KeycloakAdmin::user()->all());
         if (count($keycloakUsers) === 1 && $keycloakUsers[0] === true) {
             // KeycloakAdmin returns true instead of array when empty
+            KeycloakLog::log('No Keycloak Users to sync');
             throw new KeycloakNoUsersException();
         }
+        $ids = $keycloakUsers->pluck('keycloak_id')->join(', ');
+        KeycloakLog::log("Syncing Keycloak Users (count: {$keycloakUsers->count()}, keycloak_ids: {$ids}...");
         foreach (User::all() as $user) {
             if ($keycloakUsers->contains(function ($keycloakUser) use ($user) {
                 return $keycloakUser['id'] == $user->keycloak_id;
@@ -46,6 +50,7 @@ class KeycloakUsersService
             }
             User::withoutEvents(function () use ($user) {
                 $user->delete();
+                KeycloakLog::log("Syncing Keycloak: User Deleted (id: {$user->id}, keycloak_id: {$user->keycloak_id}");
             });
         }
 

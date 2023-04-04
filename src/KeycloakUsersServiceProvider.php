@@ -3,6 +3,7 @@
 namespace berthott\KeycloakUsers;
 
 use berthott\KeycloakUsers\Facades\KeycloakUsers;
+use berthott\KeycloakUsers\Helpers\KeycloakLog;
 use berthott\KeycloakUsers\Http\Controllers\KeycloakUsersController;
 use berthott\KeycloakUsers\Services\KeycloakUsersService;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,9 @@ class KeycloakUsersServiceProvider extends ServiceProvider
         // bind singleton
         $this->app->singleton('KeycloakUsers', function () {
             return new KeycloakUsersService();
+        });
+        $this->app->singleton('KeycloakLog', function () {
+            return new KeycloakLog();
         });
 
         // add config
@@ -35,6 +39,13 @@ class KeycloakUsersServiceProvider extends ServiceProvider
             __DIR__.'/../config/config.php' => config_path('keycloak-users.php'),
             __DIR__.'/../config/keycloakAdmin.php' => config_path('keycloakAdmin.php'),
         ], 'config');
+
+        // register log channel
+        $this->app->make('config')->set('logging.channels.keycloak', [
+            'driver' => 'daily',
+            'path' => storage_path('logs/keycloak.log'),
+            'level' => 'debug',
+        ]);
 
         // load migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
