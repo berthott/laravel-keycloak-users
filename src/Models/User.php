@@ -7,6 +7,9 @@ use berthott\KeycloakUsers\Observers\UserObserver;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 
+/** 
+ * User model implementation.
+ */
 class User extends Authenticatable
 {
     use Crudable;
@@ -14,7 +17,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     public $fillable = [
         'keycloak_id',
@@ -24,6 +27,11 @@ class User extends Authenticatable
         'email',
     ];
 
+    /**
+     * Validation rules
+     * 
+     * @return string[]
+     */
     public static function rules(mixed $id): array
     {
         return [

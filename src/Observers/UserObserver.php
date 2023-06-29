@@ -75,6 +75,7 @@ class UserObserver
 
     /**
      * Handle the User "deleted" event.
+     * 
      * Delete the user inside Keycloak.
      */
     public function deleting(User $user): void

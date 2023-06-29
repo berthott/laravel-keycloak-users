@@ -16,6 +16,8 @@ class KeycloakUsersException extends Exception
 
     /**
      * Create a new exception instance.
+     * 
+     * @param RequestException|null $guzzleException The recommended response to send to the client.
      */
     public function __construct(RequestException|null $guzzleException = null)
     {

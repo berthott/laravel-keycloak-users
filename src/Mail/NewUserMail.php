@@ -10,6 +10,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Illuminate\Mail\Mailable implementation for new user emails.
+ */
 class NewUserMail extends Mailable
 {
     use Queueable;

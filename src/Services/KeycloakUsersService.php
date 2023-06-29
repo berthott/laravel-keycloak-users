@@ -13,14 +13,9 @@ use LaravelKeycloakAdmin\Facades\KeycloakAdmin;
 class KeycloakUsersService
 {
     /**
-     * The Constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * The Constructor.
+     * Initialize the service.
+     * 
+     * Run the keycloak sync once.
      */
     public function init(): void
     {

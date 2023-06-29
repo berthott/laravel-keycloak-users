@@ -31,6 +31,7 @@ abstract class KeycloakUsersTestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app)
     {
+        // environment variables can be found in phpunit.xml
         Config::set('crudable.namespace', __NAMESPACE__);
         Config::set('keycloak-users.mail.link', 'http://testurl.com/login');
     }
