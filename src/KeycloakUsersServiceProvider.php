@@ -2,6 +2,7 @@
 
 namespace berthott\KeycloakUsers;
 
+use berthott\KeycloakUsers\Console\Sync;
 use berthott\KeycloakUsers\Facades\KeycloakUsers;
 use berthott\KeycloakUsers\Helpers\KeycloakLog;
 use berthott\KeycloakUsers\Http\Controllers\KeycloakUsersController;
@@ -67,6 +68,13 @@ class KeycloakUsersServiceProvider extends ServiceProvider
         Route::group($this->routeConfiguration(), function () {
             Route::get('currentUser', [KeycloakUsersController::class, 'current'])->name('users.current');
         });
+
+        // Register the command if we are using the application via the CLI
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Sync::class,
+            ]);
+        }
 
         // init singleton
         KeycloakUsers::init();

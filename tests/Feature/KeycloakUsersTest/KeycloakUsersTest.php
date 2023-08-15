@@ -4,7 +4,9 @@ namespace berthott\KeycloakUsers\Tests\Feature\KeycloakUsersTest;
 
 use berthott\KeycloakUsers\Facades\KeycloakUsers;
 use berthott\KeycloakUsers\Mail\NewUserMail;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -41,10 +43,19 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
      * the realm-management client roles 'manage-users', 'query-users' and 'view-users'.
      * Select Realm -> Roles -> Default Roles -> Client Roles realm-management.
      */
-    public function test_user_sync(): void
+    public function test_auto_user_sync(): void
     {
         // automatic user sync on init
+        Config::set('keycloak-users.auto_sync', true);
         KeycloakUsers::init();
+        $this->assertDatabaseHas('users', [
+            'username' => 'test.test',
+        ]);
+    }
+
+    public function test_user_sync_command(): void
+    {
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseHas('users', [
             'username' => 'test.test',
         ]);
@@ -57,7 +68,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
     {
         // creation
         Mail::fake();
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseMissing('users', ['username' => 'testfirst.testlast']);
         $this->assertDatabaseCount('users', 1);
         User::create([
@@ -69,7 +80,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         $this->assertDatabaseHas('users', ['username' => 'testfirst.testlast']);
         DB::table('users')->truncate();
         $this->assertDatabaseMissing('users', ['username' => 'testfirst.testlast']);
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseHas('users', ['username' => 'testfirst.testlast']);
         $this->assertDatabaseCount('users', 2);
 
@@ -80,7 +91,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         $this->assertDatabaseHas('users', ['username' => 'changed.testlast']);
         DB::table('users')->truncate();
         $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseHas('users', ['username' => 'changed.testlast']);
         $this->assertDatabaseCount('users', 2);
 
@@ -88,7 +99,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
         $deleteUser = User::where('email', 'testfirst.testlast@test.com')->first();
         $deleteUser->delete();
         $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseMissing('users', ['username' => 'changed.testlast']);
         $this->assertDatabaseCount('users', 1);
     }
@@ -100,7 +111,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
     {
         // creation
         Mail::fake();
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseMissing('users', ['username' => 'testfirst.testlast']);
         $this->assertDatabaseCount('users', 1);
         $id = $this->post(route('users.store'), [
@@ -133,7 +144,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
 
     public function test_current_user(): void
     {
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $user = User::first();
         $attributes = array_intersect_key($user->getAttributes(), array_fill_keys([
           'username',
@@ -154,7 +165,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
     {
         // creation
         Mail::fake();
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseMissing('users', ['username' => 'testfirst.testlast']);
         $this->assertDatabaseCount('users', 1);
         $id = $this->post(route('users.store'), [
@@ -238,7 +249,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
     {
         $num = 130;
         Mail::fake();
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         
         $this->assertDatabaseCount('users', 1);
 
@@ -253,7 +264,7 @@ class KeycloakUsersTest extends KeycloakUsersTestCase
 
         $this->assertDatabaseCount('users', $num);
         DB::table('users')->truncate();
-        KeycloakUsers::init();
+        Artisan::call('keycloak:sync');
         $this->assertDatabaseCount('users', $num);
         
         // deletion

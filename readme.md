@@ -5,7 +5,7 @@ Laravel user administration in Keycloak.
 Keycloak user administration utilizing [haizad/laravel-keycloak-admin](https://github.com/haizad/laravel-keycloak-admin) for Keycloak API communication.
 Working hand in hand with [robsontenorio/laravel-keycloak-guard](https://github.com/robsontenorio/laravel-keycloak-guard) and / or [Vizir/laravel-keycloak-web-guard](https://github.com/Vizir/laravel-keycloak-web-guard) for Keycloak authorization.
 
-Creates a user representation on Laravel side and hooks into the model events to create the users in keycloak. Additionally syncs the current Keycloak state into Laravel.
+Creates a user representation on Laravel side and hooks into the model events to create the users in keycloak. Optionally syncs the current Keycloak state into Laravel.
 
 ## Keycloak as a guard for your Laravel application
 
@@ -112,6 +112,7 @@ $ php artisan vendor:publish --provider="berthott\KeycloakUsers\KeycloakUsersSer
 * `mail.from.name`: From Name defaults to `env('APP_NAME')`
 * `mail.subject`: Subject defaults to `'Welcome to '.env('APP_NAME')`
 * `mail.link`: Link defaults to `env('APP_URL')`
+* `auto_sync`: The local laravel users will be synced with the keycloak users on every request. This will slow down the request performance significantly. Use `keycloak:sync` instead. Defaults to `env('KEYCLOAK_USERS_AUTO_SYNC', false)`.
 
 ## Dependencies
 
