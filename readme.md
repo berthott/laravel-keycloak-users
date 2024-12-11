@@ -1,3 +1,5 @@
+![test workflow](https://github.com/berthott/laravel-keycloak-users/actions/workflows/test.yml/badge.svg)
+
 # Laravel-Keycloak-Users 
 
 Laravel user administration in Keycloak.
