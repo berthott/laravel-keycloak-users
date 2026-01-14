@@ -48,11 +48,9 @@ class KeycloakUsersService
             }
         }
         if ($this->noUsersReturned($keycloakUsers)) {
-            KeycloakLog::log('No Keycloak Users to sync');
             throw new KeycloakNoUsersException();
         }
         $ids = $keycloakUsers->pluck('keycloak_id')->join(', ');
-        KeycloakLog::log("Syncing Keycloak Users (count: {$keycloakUsers->count()}, keycloak_ids: {$ids}...");
 
         // delete users deleted in keycloak
         foreach (User::all() as $user) {
